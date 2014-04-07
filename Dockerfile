@@ -26,4 +26,4 @@ RUN chmod +x /usr/local/bin/znc_makeconf
 RUN echo "#!/bin/bash\nchown znc:znc /var/znc && su - znc -c 'znc --foreground'" > /usr/local/bin/znc_foreground
 RUN chmod +x /usr/local/bin/znc_foreground
 
-CMD ["znc_makeconf"]
+CMD ["znc_foreground"]
