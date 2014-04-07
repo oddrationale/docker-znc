@@ -17,7 +17,7 @@ RUN adduser --system --group --home /var/znc --shell /bin/bash znc
 # Create some helper scripts to be used by 'docker run'. 
 # When mounting data volumes, it mounts as root:root. Helper scripts
 # chown's /var/znc back to znc:znc so it can be written by znc.
-RUN echo "chown znc:znc /var/znc && su - znc -c 'znc --makeconf'" > /usr/local/bin/znc_makeconf
+RUN echo "#!/bin/bash\nchown znc:znc /var/znc && su - znc -c 'znc --makeconf'" > /usr/local/bin/znc_makeconf
 RUN chmod +x /usr/local/bin/znc_makeconf
-RUN echo "chown znc:znc /var/znc && su - znc -c 'znc --foreground'" > /usr/local/bin/znc_foreground
+RUN echo "#!/bin/bash\nchown znc:znc /var/znc && su - znc -c 'znc --foreground'" > /usr/local/bin/znc_foreground
 RUN chmod +x /usr/local/bin/znc_foreground
