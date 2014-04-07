@@ -8,17 +8,13 @@ Quick Start
 
 To get started, first create your ZNC configuration using:
 
-```bash
-docker run -it --name znc_makeconf oddrationale/docker-znc znc_makeconf
-```
+    docker run -it --name znc_makeconf oddrationale/docker-znc znc_makeconf
 
 The first step will ask you `What port would you like ZNC to listen on? (1025 to 65535)`. Enter a port number within the range (e.g. 6667) and remember it for the next step. Then at the very last step when it asks you `Launch ZNC now? (yes/no)`, select `no`. Refer to the [ZNC configuration guide](http://wiki.znc.in/Configuration) for details of the other configuration options.
 
 To start ZNC, enter the following command, replacing the port number with the port you select from the first step:
 
-```bash
-docker run -d -p 6667:6667 --volumes-from znc_makeconf oddrationale/docker-znc
-```
+    docker run -d -p 6667:6667 --volumes-from znc_makeconf oddrationale/docker-znc
 
 Make sure you have the proper firewall rules to access the port. If you enabled the webadmin module, you should be able to open `<your_ip_address>:<port_number>` in your browser to check that it is working (if you selected to use SSL, then prefix the URL with `https://`).
 
@@ -32,18 +28,16 @@ Autostart with systemd
 
 Here's an example unit file for `docker-znc.service`:
 
-```
-[Unit]
-Description=docker-znc service
-After=docker.service
-Requires=docker.service
-
-[Service]
-ExecStart=/usr/bin/docker run -p 6667:6667 --rm --volumes-from znc_makeconf oddrationale/docker-znc
-
-[Install]
-WantedBy=multi-user.target
-```
+    [Unit]
+    Description=docker-znc service
+    After=docker.service
+    Requires=docker.service
+    
+    [Service]
+    ExecStart=/usr/bin/docker run -p 6667:6667 --rm --volumes-from znc_makeconf oddrationale/docker-znc
+    
+    [Install]
+    WantedBy=multi-user.target
 
 Questions/Feedback
 ------------------
