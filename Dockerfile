@@ -4,6 +4,9 @@
 
 FROM ubuntu:12.04
 
+# Add data volume to hold ZNC config files
+VOLUME ["/var/znc"]
+
 # Manually add ppa:teward/znc instead of using add-apt-repository,
 # which pulls in too many unneeded dependencies. Keep it slim!
 RUN echo "deb http://ppa.launchpad.net/teward/znc/ubuntu precise main" > /etc/apt/sources.list.d/teward-znc-precise.list
