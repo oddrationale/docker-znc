@@ -1,6 +1,7 @@
 # Latest version of ZNC from ppa:teward/znc
 #
 # VERSION   0.0.1
+MAINTAINER Dariel Dato-on <oddrationale@gmail.com>
 
 FROM ubuntu:12.04
 
