@@ -1,16 +1,16 @@
 docker-znc
 ==========
 
-This Dockerfile builds an image with the latest version of [ZNC](znc.in). The image features an Ubuntu 12.04 LTS base with ZNC is installed from [ppa:teward/znc](https://launchpad.net/~teward/+archive/znc) (the PPA listed on the [ZNC installation page](http://wiki.znc.in/Installation#Install_via_PPA)).
+This Dockerfile builds an image with the latest version of [ZNC](znc.in). The image features an Ubuntu 14.04 LTS base with ZNC installed from source.
 
 Quick Start
 -----------
 
 To get started, first create your ZNC configuration using:
 
-    docker run -it --name znc_makeconf oddrationale/docker-znc znc_makeconf
+    docker run -it --name znc_makeconf oddrationale/docker-znc --makeconf
 
-The first step will ask you `What port would you like ZNC to listen on? (1025 to 65535)`. Enter a port number within the range (e.g. 6667) and remember it for the next step. Then at the very last step when it asks you `Launch ZNC now? (yes/no)`, select `no`. Refer to the [ZNC configuration guide](http://wiki.znc.in/Configuration) for details of the other configuration options.
+The first step will ask you `What port would you like ZNC to listen on? (1025 to 65535)`. Enter a port number within the range (e.g. 6667) and remember it for the next step. Refer to the [ZNC configuration guide](http://wiki.znc.in/Configuration) for details of the other configuration options.
 
 To start ZNC, enter the following command, replacing the port number with the port you select from the first step:
 

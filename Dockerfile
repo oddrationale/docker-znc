@@ -1,29 +1,33 @@
-# Latest version of ZNC from ppa:teward/znc
+# Docker image running ZNC 1.4
 #
-# VERSION   0.0.1
+# VERSION   0.0.2
 
-FROM ubuntu:12.04
+FROM ubuntu:14.04
 MAINTAINER Dariel Dato-on <oddrationale@gmail.com>
+
+# Compile ZNC from source
+ADD http://znc.in/releases/znc-1.4.tar.gz /tmp/
+RUN apt-get update && \
+    apt-get -y install build-essential libssl-dev libperl-dev pkg-config
+RUN cd /tmp && \
+    tar -xzvf znc*.*gz && \
+    cd znc* && \
+    ./configure && \
+    make && \
+    make install
+
+# Clean up ZNC install
+RUN rm -rf /tmp/znc* && \
+    apt-get -y autoremove build-essential libssl-dev libperl-dev pkg-config && \
+    apt-get clean
+
+# Create a 'znc' user so we don't run znc as root. HOME=/var/znc
+RUN adduser --system --group --home /var/znc --shell /bin/bash znc
+USER znc
+ENV HOME /var/znc
 
 # Add data volume to hold ZNC config files
 VOLUME ["/var/znc"]
 
-# Manually add ppa:teward/znc instead of using add-apt-repository,
-# which pulls in too many unneeded dependencies. Keep it slim!
-RUN echo "deb http://ppa.launchpad.net/teward/znc/ubuntu precise main" > /etc/apt/sources.list.d/teward-znc-precise.list
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E616D378
-RUN apt-get update
-RUN apt-get install -y znc
-
-# Create a 'znc' user so we don't run znc as root. HOME=/var/znc
-RUN adduser --system --group --home /var/znc --shell /bin/bash znc
-
-# Create some helper scripts to be used by 'docker run'. 
-# When mounting data volumes, it mounts as root:root. Helper scripts
-# chown's /var/znc back to znc:znc so it can be written by znc.
-RUN echo "#!/bin/bash\nchown znc:znc /var/znc && su - znc -c 'znc --makeconf'" > /usr/local/bin/znc_makeconf
-RUN chmod +x /usr/local/bin/znc_makeconf
-RUN echo "#!/bin/bash\nchown znc:znc /var/znc && su - znc -c 'znc --foreground'" > /usr/local/bin/znc_foreground
-RUN chmod +x /usr/local/bin/znc_foreground
-
-CMD ["znc_foreground"]
+ENTRYPOINT ["/usr/local/bin/znc"]
+CMD ["--foreground"]
