@@ -1,7 +1,7 @@
 docker-znc
 ==========
 
-This Dockerfile builds an image with the latest version of [ZNC](znc.in). The image features an Ubuntu 14.04 LTS base with ZNC installed from source.
+This Dockerfile builds an image with the latest version of [ZNC](http://znc.in). The image features an Ubuntu 14.04 LTS base with ZNC installed from source.
 
 Quick Start
 -----------
