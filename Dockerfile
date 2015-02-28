@@ -1,4 +1,4 @@
-# Docker image running ZNC 1.4
+# Docker image running ZNC 1.6
 #
 # VERSION   0.2.0
 
